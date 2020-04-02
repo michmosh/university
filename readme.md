@@ -11,7 +11,7 @@ STEPS TO DEPLOY :
 
 5. change .env file with new created database details 
 
-6. cd into <project-folder>
+6. cd into your project folder
 
 7. run - php artisan migrate:fresh --seed - this will create all the tables and will fill them with data
 
