@@ -8393,6 +8393,16 @@ body {
   text-align: left;
 }
 
+.content .student-container .list-group-item.flex,
+.content .form-container .list-group-item.flex {
+  padding: 1rem 7rem;
+}
+
+.content .student-container .list-group-item.flex div,
+.content .form-container .list-group-item.flex div {
+  width: 50%;
+}
+
 .content .students-wrapper {
   padding: 3rem;
   display: -webkit-box;
@@ -8460,6 +8470,12 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.content .justify-content {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .content .border-bottom {

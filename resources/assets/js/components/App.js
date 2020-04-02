@@ -25,7 +25,7 @@ class App extends Component {
                     <Header />
                         <div className="content" style={{paddingTop:5 + 'rem', fontSize : 25 +'px'}}>
                             <Switch>
-                                <Route path="/users/:id" render={(props)=><Student userId="3"/>} />
+                                <Route path="/users/:id" render={(props)=><Student config={this.state}/>} />
                                 <Route path="/users" component={StudentList} config={this.state}/>
                                 <Route path={["/","login"]} render={(props)=><Login/> }/>
                             </Switch>

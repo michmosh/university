@@ -4,7 +4,7 @@ import {withRouter, Redirect} from 'react-router-dom';
 class Student extends Component {
     constructor(props){
         super(props);
-        this.noGrade = 'NO GRADE'
+        this.noGrade = 'NONE'
         this.allowedUsers = ['admin' , "student"];
         this.state = {
             studentId :props.userId || '',
@@ -68,8 +68,8 @@ class Student extends Component {
                         this.state.student.grades && this.state.classes.length ? 
                            this.state.classes.map(item=>{
                                 return (
-                                    <li className="list-group-item" key={item.id}>
-                                        {item.class_name} : {this.checkForGrades(item)}
+                                    <li className="list-group-item flex justify-content" key={item.id}>
+                                        <div>{item.class_name}</div>  <div>{this.checkForGrades(item) || this.noGrade}</div>
                                     </li>
                                 )
                         })

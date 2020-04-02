@@ -20646,7 +20646,7 @@ var Student = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, props));
 
-        _this.noGrade = 'NO GRADE';
+        _this.noGrade = 'NONE';
         _this.allowedUsers = ['admin', "student"];
         _this.state = {
             studentId: props.userId || '',
@@ -20730,10 +20730,18 @@ var Student = function (_Component) {
                     this.state.student.grades && this.state.classes.length ? this.state.classes.map(function (item) {
                         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'li',
-                            { className: 'list-group-item', key: item.id },
-                            item.class_name,
-                            ' : ',
-                            _this4.checkForGrades(item)
+                            { className: 'list-group-item flex justify-content', key: item.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                null,
+                                item.class_name
+                            ),
+                            '  ',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                null,
+                                _this4.checkForGrades(item) || _this4.noGrade
+                            )
                         );
                     }) : null
                 )
@@ -52115,6 +52123,8 @@ var App = function (_Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
                 null,
@@ -52129,7 +52139,7 @@ var App = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["e" /* Switch */],
                             null,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Route */], { path: '/users/:id', render: function render(props) {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Student__["a" /* default */], { userId: '3' });
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Student__["a" /* default */], { config: _this2.state });
                                 } }),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Route */], { path: '/users', component: __WEBPACK_IMPORTED_MODULE_6__StudentList__["a" /* default */], config: this.state }),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Route */], { path: ["/", "login"], render: function render(props) {

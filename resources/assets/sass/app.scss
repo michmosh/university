@@ -55,6 +55,12 @@
                 text-align: left;
             }
         }
+        .list-group-item.flex{
+            padding:1rem 7rem;
+            div{
+                width:50%;
+            }
+        }
     }
     .students-wrapper{
         padding:3rem;
@@ -108,6 +114,9 @@
     }
     .flex{
         display:flex;
+    }
+    .justify-content{
+        justify-content: space-between;
     }
     .border-bottom{
         border-bottom:1px solid $panel-default-border;
