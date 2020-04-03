@@ -16,29 +16,16 @@ class App extends Component {
                 role:"guest",
                 id:null,
                 page:'/login'
-            }
+            },
+            isLoggedIn:false
         }
     }
 
-    componentDidMount(){
-        this.getLocalStorage();
-    }
-
-    getLocalStorage(){
-        let userString = localStorage.getItem('user');
-        let user;
-        if(userString){
-            user = JSON.parse(userString);
-            this.setState({
-                ...user
-            })
-        }
-    }
     render () {
         return (
             <Router>
                 <div className="container">
-                    <Header config={this.props}/>
+                    <Header/>
                         <div className="content" style={{paddingTop:5 + 'rem', fontSize : 25 +'px'}}>
                             <Switch>
                                 <Route path="/users/:id" render={(props)=><Student config={this.state.user} />} />

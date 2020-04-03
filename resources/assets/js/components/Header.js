@@ -7,10 +7,10 @@ class Header extends Component {
     constructor(props){
         super(props);
     }
+
     logout(event){
         LocalStorageService.removeLocalStorage();
         this.props.history.push('/login');
-
     }
     render () {
         return (
@@ -18,7 +18,12 @@ class Header extends Component {
             <span className="icon">
                 <FontAwesomeIcon icon={faGraduationCap}/>
             </span>
-            <span className="icon" onClick={(event)=>this.logout(event)}>logout</span>
+            {
+                this.props.location.pathname !== "/login" ? 
+                <span className="icon" onClick={(event)=>this.logout(event)}>logout</span>
+                :
+                null
+            }
         </div>
         )
     }
