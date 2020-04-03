@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Link , withRouter, Redirect} from 'react-router-dom';
 import Grade from './Grade';
+import LocalStorageService from '../services/LocalStorage.service';
 
 class StudentList extends Component {
     constructor(props){
@@ -17,7 +18,8 @@ class StudentList extends Component {
     }
 
     componentDidMount(){
-        if(this.state.user.role === "admin"){
+        let user = LocalStorageService.getLocalStorage();
+        if(this.state.user.role === "admin"|| user.role=== "admin"){
             this.getUsers();
             this.getClasses();
         }
@@ -69,7 +71,7 @@ class StudentList extends Component {
     }
     render () {
         return (
-            this.state.user.role === "admin" ?
+            this.state.user.role === "admin" || LocalStorageService.getLocalStorage().role === "admin" ?
             <div className="students-wrapper">
                 <table className="table table-hover table-bordered">
                     <tbody>
@@ -106,5 +108,4 @@ class StudentList extends Component {
         )
     }
 }
-// export default withRouter(StudentList);
 export default StudentList;

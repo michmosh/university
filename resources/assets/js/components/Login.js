@@ -3,6 +3,7 @@ import axios from 'axios';
 import StudentList from './StudentList';
 import Student from './Student';
 import { Redirect } from 'react-router';
+import LocalStorageService from '../services/LocalStorage.service';
 export default class Login extends React.Component {
 
     constructor(props){
@@ -23,8 +24,13 @@ export default class Login extends React.Component {
         }
     }
 
-    componentDidUpdate(props , old_props){
-        
+    componentDidMount(){
+        const user = LocalStorageService.getLocalStorage();
+        if(!_.isEmpty(user)){
+            this.setState({
+                user:{...user}
+            })
+        }
     }
 
     onChnageHandler(event){
@@ -41,42 +47,37 @@ export default class Login extends React.Component {
         }
         axios.post(`/api/login` ,userObject )
             .then(res=>{
-                // this.props.callback({
-                //             role:res.data.role,
-                //             id:res.data.id,
-                //             isAuthenticated : true
-                //         })
                 if(res.data.success === true){
-                    this.setState({
-                        user:{
-                            role:res.data.role,
-                            id:res.data.id,
-                            isAuthenticated : true
-                        }
-                    });
-                   this.setLocalStorage();
+                    this.authorizeUser({
+                                role:res.data.role,
+                                id:res.data.id,
+                                isAuthenticated : true
+                            });
                 } 
+
             })
         event.preventDefault();
     }
-
-    setLocalStorage(){
+    authorizeUser(user){
         let path;
-        switch(this.state.user.role){
+        switch(user.role){
             case "admin":
                 path = '/users';
                 break;
             case "student":
-                path=`/users/${this.state.user.id}`;
+                path=`/users/${user.id}`;
                 break;
             case "guest":
                 default :
                 path='/login';
                 break;
         }
-        let storageObject = JSON.stringify({...this.state.user , path:path});
-        localStorage.setItem("user",storageObject);
+       this.setState({
+          user:{...user , page:path}
+       })
+       LocalStorageService.setLocalStorage(this.state.user);
     }
+
     render(){
         return (
             <section>

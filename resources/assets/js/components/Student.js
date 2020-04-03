@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import axios from 'axios';
 import {withRouter, Redirect} from 'react-router-dom';
+import LocalStorageService from '../services/LocalStorage.service';
 class Student extends Component {
     constructor(props){
         super(props);
@@ -14,19 +15,28 @@ class Student extends Component {
         }
         
     }
-
+    
     componentDidMount(){
-        if(_.includes(this.allowedUsers,this.state.user.role)){
+        let user = LocalStorageService.getLocalStorage();
+        if(_.includes(this.allowedUsers, user.role || this.state.user.role)){
             if(this.state.user.id){
                 this.getUser(this.state.user.id);
             }else{
                 const { match: { params } } = this.props;
-                this.getUser(params.id);
+                if(user.role === "admin"){
+                    this.getUser(params.id);
+                }else{
+                    this.getUser(user.id || params.id);
+                }
+                if(user.id && user.role !== "admin"){
+                    this.props.history.push(`/users/${user.id}`)
+                }
+                
             }
             this.getClasses()
         }
     }
-   
+
     getUser(id){
         axios.get(`/api/users/${id}`)
         .then(res=>{
@@ -59,7 +69,7 @@ class Student extends Component {
 
     render () {
         return (
-            _.includes(this.allowedUsers,this.state.user.role) ? 
+            _.includes(this.allowedUsers,LocalStorageService.getLocalStorage().role || this.state.user.role) ? 
             <div className="student-container">
                 <div>{this.state.student.name}</div> 
                 <div>{this.state.student.email}</div> 
@@ -84,4 +94,3 @@ class Student extends Component {
     }
 }
 export default withRouter(Student);
-// export default Student;

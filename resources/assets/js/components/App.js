@@ -1,33 +1,49 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import {Redirect} from 'react-router';
 import Header from './Header';
 import Footer from './Footer';
 import StudentList from './StudentList';
 import Student from './Student';
-import Example from './Example';
 import Login from './Login';
 
 class App extends Component {
-    constructor(props , history){
+    constructor(props){
         super(props);
         this.state = {
-            isLoggedIn : false,
-            role:"guest",
-            id:null
+            user:{
+                isLoggedIn : false,
+                role:"guest",
+                id:null,
+                page:'/login'
+            }
+        }
+    }
+
+    componentDidMount(){
+        this.getLocalStorage();
+    }
+
+    getLocalStorage(){
+        let userString = localStorage.getItem('user');
+        let user;
+        if(userString){
+            user = JSON.parse(userString);
+            this.setState({
+                ...user
+            })
         }
     }
     render () {
         return (
             <Router>
                 <div className="container">
-                    <Header />
+                    <Header config={this.props}/>
                         <div className="content" style={{paddingTop:5 + 'rem', fontSize : 25 +'px'}}>
                             <Switch>
-                                <Route path="/users/:id" render={(props)=><Student config={this.state}/>} />
-                                <Route path="/users" component={StudentList} config={this.state}/>
-                                <Route path={["/","login"]} render={(props)=><Login/> }/>
+                                <Route path="/users/:id" render={(props)=><Student config={this.state.user} />} />
+                                <Route path="/users" component={StudentList} config={this.state.user}/>
+                                <Route path={["/","login"]} render={(props)=><Login /> }/>
                             </Switch>
                         </div>
                     <Footer />
@@ -37,4 +53,4 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));

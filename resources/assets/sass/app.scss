@@ -29,6 +29,7 @@
     border-bottom: 1px solid $panel-default-border;
     position: fixed;
     grid-area: header;
+    justify-content: space-between;
     .icon{
         font-size: 2em;
         margin: 0 2rem;
@@ -66,6 +67,11 @@
         padding:3rem;
         display:flex;
         justify-content: center;
+        .student-name{
+            padding:2rem 0;
+            font-weight: bold;
+            color:steelblue;
+        }
         ul{
             padding:3rem;
         }
@@ -74,11 +80,6 @@
             .class-wrapper{
                 display: flex;
                 justify-content: space-between;
-                .student-name{
-                    padding:2rem 0;
-                    font-weight: bold;
-                    color:steelblue;
-                }
                 .grade-wrapper{
                     width:10rem;
                     min-height:7rem;
@@ -112,9 +113,6 @@
             }
         }
     }
-    .flex{
-        display:flex;
-    }
     .justify-content{
         justify-content: space-between;
     }
@@ -131,16 +129,8 @@
     bottom:0;
     grid-area: footer;
 }
-
-
-
-
-.student-name{
-    // width:10rem;
-    // text-align: left;
-    padding:2rem 0;
-    font-weight: bold;
-    color:steelblue;
+.flex{
+    display:flex;
 }
 .alert{
     width:25rem;
