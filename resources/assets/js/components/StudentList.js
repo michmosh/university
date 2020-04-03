@@ -79,8 +79,8 @@ class StudentList extends Component {
                     this.state.students.map((el,index)=>{
                         return(
                             <tr  key={el.id}>
-                                <td className="student-name" to={`/users/${el.id}`}>
-                                    {el.name}
+                                <td className="student-name" >
+                                    <Link to={`/users/${el.id}`}>{el.name}</Link>
                                 </td>
                                 <td className="class-wrapper">
                                     {
