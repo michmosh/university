@@ -65286,6 +65286,8 @@ module.exports = hoistNonReactStatics;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_LocalStorage_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_ApiHelper_service__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65293,6 +65295,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -65313,14 +65316,18 @@ var Header = function (_Component) {
     _createClass(Header, [{
         key: "logout",
         value: function logout(event) {
-            __WEBPACK_IMPORTED_MODULE_4__services_LocalStorage_service__["a" /* default */].removeLocalStorage();
-            __WEBPACK_IMPORTED_MODULE_5__services_ApiHelper_service__["a" /* default */].removeAxiosHeader();
-            this.props.history.push('/login');
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_6_axios___default.a.post('/api/logout').then(function (res) {
+                __WEBPACK_IMPORTED_MODULE_4__services_LocalStorage_service__["a" /* default */].removeLocalStorage();
+                __WEBPACK_IMPORTED_MODULE_5__services_ApiHelper_service__["a" /* default */].removeAxiosHeader();
+                _this2.props.history.push('/login');
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
@@ -65333,7 +65340,7 @@ var Header = function (_Component) {
                 this.props.location.pathname !== "/login" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "span",
                     { className: "icon", onClick: function onClick(event) {
-                            return _this2.logout(event);
+                            return _this3.logout(event);
                         } },
                     "logout"
                 ) : null

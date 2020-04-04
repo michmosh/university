@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\User;
 
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    private $api_token;
+    public function __construct(){
+        $this->api_token = str_random(60);
+    }
     public function index(){
         echo 'index';
     }
@@ -31,17 +36,39 @@ class UserController extends Controller
            );
         if(Auth::attempt($user_data)){
             $user = Auth::user();
-            return response()->json([
-                'success' => true,
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role'  => $user->role,
-                'api_token' => $user->api_token
-            ]);
+            $login = $user->update(['api_token'=>$this->api_token]);
+            if($login){
+                return response()->json([
+                    'success' => true,
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role'  => $user->role,
+                    'api_token' => $this->api_token
+                ]);
+            }
+            
         }
         else{
             return ('fail');
         }
+    }
+    public function logout(Request $request){
+        $token = $request->header('Authorization');
+        if (Str::startsWith($token, 'Bearer ')) {
+            $token = Str::substr($token, 7);
+        }
+        $user = User::where('api_token',$token)->first();
+        if($user) {
+            $logout = User::where('id',$user->id)->update( ['api_token' => null]);
+            if($logout){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'loggedOut',
+                  ]);
+          
+            }
+        }
+        
     }
 }

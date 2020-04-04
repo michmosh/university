@@ -20,8 +20,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('grades', 'GradesController@addNew');
     Route::patch('grades/{id}', 'GradesController@update');
     Route::get('users/{id}', 'UserController@getUser');
+    Route::post('logout', 'UserController@logout');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+// olKzcz8hergmyp6pt6WYWMqIS5sDR0HokhT8IonDP8LB2sogFjjM9O1tnLn7
