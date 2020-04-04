@@ -12,19 +12,18 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('users', 'UserController@getUsers');
-Route::get('users/{id}', 'UserController@getUser');
+// Route::get('users', 'UserController@getUsers');
+
 Route::post('login/', 'UserController@login');
-Route::get('classes', 'ClassesController@getAll');
-Route::post('grades', 'GradesController@addNew');
-Route::patch('grades/{id}', 'GradesController@update');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('users', 'UserController@getUsers');
+    Route::get('classes', 'ClassesController@getAll');
+    Route::post('classes', 'ClassesController@addNew');
+    Route::post('grades', 'GradesController@addNew');
+    Route::patch('grades/{id}', 'GradesController@update');
+    Route::get('users/{id}', 'UserController@getUser');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-// Route::group(['middleware' => ['web']], function () {
-//     Route::post('grades', 'GradesController@addNew');
-//     Route::patch('grades/{id}', 'GradesController@update');
-//     Route::get('users', 'UserController@getUsers');
-//     Route::get('users/{id}', 'UserController@getUser');
-//     Route::get('classes', 'ClassesController@getAll');
-// });

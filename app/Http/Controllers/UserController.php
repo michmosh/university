@@ -36,7 +36,8 @@ class UserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'role'  => $user->role
+                'role'  => $user->role,
+                'api_token' => $user->api_token
             ]);
         }
         else{

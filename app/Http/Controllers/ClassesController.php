@@ -10,4 +10,8 @@ class ClassesController extends Controller
     public function getAll(){
         return Classes::all()->toJson();
     }
+
+    public function addNew(Request $request){
+        return Classes::create(['class_name' => $request->get('class_name')])->toJson();
+    }
 }

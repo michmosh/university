@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {withRouter, Redirect} from 'react-router-dom';
 import LocalStorageService from '../services/LocalStorage.service';
+import ApiHelperService from '../services/ApiHelper.service';
 class Student extends Component {
     constructor(props){
         super(props);
@@ -20,9 +21,11 @@ class Student extends Component {
         let user = LocalStorageService.getLocalStorage();
         if(_.includes(this.allowedUsers, user.role || this.state.user.role)){
             if(this.state.user.id){
+                ApiHelperService.setAxiosHeaders(this.state.user.api_token);
                 this.getUser(this.state.user.id);
             }else{
                 const { match: { params } } = this.props;
+                ApiHelperService.setAxiosHeaders(user.api_token);
                 if(user.role === "admin"){
                     this.getUser(params.id);
                 }else{

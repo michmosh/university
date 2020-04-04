@@ -8346,7 +8346,7 @@ body {
 .container {
   width: 100%;
   display: grid;
-  grid-template-areas: "header header header header header" "content content content content content" "footer footer footer footer footer";
+  grid-template-areas: "header header header header header" "content content content content content" "footer footer footer footer footer";
   padding: 0;
   margin: 0;
 }

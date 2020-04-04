@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faGraduationCap} from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from 'react-router-dom';
 import LocalStorageService from '../services/LocalStorage.service';
+import ApiHelperService from '../services/ApiHelper.service';
 class Header extends Component {
     constructor(props){
         super(props);
@@ -10,6 +11,7 @@ class Header extends Component {
 
     logout(event){
         LocalStorageService.removeLocalStorage();
+        ApiHelperService.removeAxiosHeader();
         this.props.history.push('/login');
     }
     render () {

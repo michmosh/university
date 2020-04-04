@@ -9,6 +9,7 @@ class Classes extends Model
     // class that represents classes in the university 
     // @class_name
     protected $table = "classes";
+    protected $fillable = ['class_name'];
     public $incrementing = false;
 
     public function users(){

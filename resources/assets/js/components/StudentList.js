@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link , withRouter, Redirect} from 'react-router-dom';
 import Grade from './Grade';
 import LocalStorageService from '../services/LocalStorage.service';
+import ApiHelperService from '../services/ApiHelper.service';
 
 class StudentList extends Component {
     constructor(props){
@@ -20,6 +21,7 @@ class StudentList extends Component {
     componentDidMount(){
         let user = LocalStorageService.getLocalStorage();
         if(this.state.user.role === "admin"|| user.role=== "admin"){
+            ApiHelperService.setAxiosHeaders(user.api_token || this.state.user.api_token);
             this.getUsers();
             this.getClasses();
         }

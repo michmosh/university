@@ -4,6 +4,7 @@ import StudentList from './StudentList';
 import Student from './Student';
 import { Redirect } from 'react-router';
 import LocalStorageService from '../services/LocalStorage.service';
+import ApiHelperService from '../services/ApiHelper.service';
 export default class Login extends React.Component {
 
     constructor(props){
@@ -47,16 +48,20 @@ export default class Login extends React.Component {
         axios.post(`/api/login` ,userObject )
             .then(res=>{
                 if(res.data.success === true){
+                    ApiHelperService.setAxiosHeaders(res.data.api_token);
                     this.authorizeUser({
                                 role:res.data.role,
                                 id:res.data.id,
-                                isAuthenticated : true
+                                isAuthenticated : true,
+                                api_token:res.data.api_token
                             });
+                   
                 } 
 
             })
         event.preventDefault();
     }
+
     authorizeUser(user){
         let path;
         switch(user.role){
